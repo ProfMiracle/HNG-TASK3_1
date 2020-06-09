@@ -37,6 +37,7 @@ use Twilio\Rest\Client;
           $stmt->close();
           $email = $result[0]['email'];
           $balance = $result[0]['unit'];
+          $user_id = $result[0]['id'];
           //////////////////////
 
           if ($balance<1) {
@@ -66,9 +67,18 @@ use Twilio\Rest\Client;
           $stmt = $con->prepare("UPDATE user SET unit = ? WHERE sid = ? and api_key = ?");
           $stmt->bind_param("ss", $id, $key);
           $stmt->execute();
+          $LastInsertID = $con->insert_id
           $stmt->close();
           //////////////////
-          
+
+
+          /////////update history
+            $stmt = $con->prepare("INSERT INTO history (user_id, to, message) VALUES (?,?,?)");
+            $stmt->bind_param("sss", $LastInsertID, $phone, $newmessage);
+            $stmt->execute();
+            $stmt->close();
+          //////////////////
+
         $response=array(
                 'status' => 1,
                 'status_message' =>'Message Sent Successfully.'
