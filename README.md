@@ -25,6 +25,6 @@ http://localhost/sms/src/balance.php?id=''&key=''
 
 #Send sms API
 #calling the rest API (test request)
-http://localhost/sms/src/balance.php?id=''&key=''$phone=''$message=''
+http://localhost/sms/src/phone_message.php?id=''&key=''$phone=''$message=''
 
 #THANKS FOR STOPPING BY
