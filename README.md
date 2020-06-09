@@ -1,9 +1,21 @@
 # HNG-TASK3_1
 A sample PHP REST API code that sends message to users
+
+
+
+
+
+
 #THIS CODE DOES THE FOLLOWING:
+
+
+
+
+
 1. SEND SMS TO USER VIA REST API
 2. LOG USER SENT MESSAGES AND TIME
 3. USER CAN CHECK HIS MESSAGE BALANCE
+
 
 #INSTRUCTIONS
 1. Fork and Clone the Repo.
@@ -15,6 +27,9 @@ A sample PHP REST API code that sends message to users
 7. import team_titan.sql
 8. edit table admin (replace in the AUTH with your Twilio Auth token - replace in SID your Twilio Account SID - Replace in phone_number with your twilio phone number)
 
+
+
+
 #Balance check API
 TEST DETAILS:
 ID = 01b307acba4f54f55aafc33bb06bbbf6ca803e9a
@@ -25,6 +40,7 @@ http://localhost/sms/src/balance.php?id=''&key=''
 
 #Send sms API
 #calling the rest API (test request)
-http://localhost/sms/src/phone_message.php?id=''&key=''$phone=''$message=''
+http://localhost/sms/src/phone_message.php?id=''&key=''&phone=''&message=''
+
 
 #THANKS FOR STOPPING BY
