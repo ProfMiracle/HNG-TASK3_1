@@ -2,9 +2,9 @@
 header("Content-Type:application/json");
 
 ////////////credentials
-$mysid = "ACcd44f65db5f8ed31060c7f852b82c0db";///////my sid
-$mytoken = "909e0cec1316ea243f56a44e540e2622";///////my token
-$Twiliophone = "+12029338352"; ///////paste twilio phone
+$mysid = "";///////my sid
+$mytoken = "";///////my token
+$Twiliophone = ""; ///////paste twilio phone
 /////////////////
 require_once 'Twilio/autoload.php';
 use Twilio\Rest\Client;
@@ -47,7 +47,7 @@ $to = validate_phone($phone);/////phone forward message to
 $twilio = new Client($sid, $token);
 
 $message = $twilio->messages
-                  ->create("+2348153193630", // to
+                  ->create($to, // to
                            [
                                "body" => $newmessage,
                                "from" => $Twiliophone
@@ -57,8 +57,8 @@ $message = $twilio->messages
 //print($message->sid);
 
 }elseif ($_GET['phone']=="" OR $_GET['message']=="") {
-	echo "phone or mesage can't be empty";
+  echo "phone or mesage can't be empty";
 }else{
-	echo "an error occured contact admin";
+  echo "an error occured contact admin";
 }
 ?>
