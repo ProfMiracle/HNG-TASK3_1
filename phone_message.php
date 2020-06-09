@@ -5,9 +5,14 @@ require_once 'Twilio/autoload.php';/////////load Twilio
 
 use Twilio\Rest\Client;
 
-  $accesvia=$_SERVER["REQUEST_METHOD"];///////how its being accessed
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $accesvia = "POST";
+}else{
+  $accesvia = "";
+}
+  //$accesvia==$_SERVER["REQUEST_METHOD"];///////how its being accessed
 
-  switch($request_method)
+  switch($accesvia)
   {
     case 'POST':
 
@@ -67,7 +72,7 @@ use Twilio\Rest\Client;
           $stmt = $con->prepare("UPDATE user SET unit = ? WHERE sid = ? and api_key = ?");
           $stmt->bind_param("ss", $id, $key);
           $stmt->execute();
-          $LastInsertID = $con->insert_id
+          $LastInsertID = $con->insert_id;
           $stmt->close();
           //////////////////
 

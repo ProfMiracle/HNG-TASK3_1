@@ -4,7 +4,7 @@ require_once "functions.php";///////all functions
 
   $accesvia=$_SERVER["REQUEST_METHOD"];///////how its being accessed
 
-  switch($request_method)
+  switch($accesvia)
   {
     case 'GET':
       ///Retrieve balance

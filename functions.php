@@ -1,11 +1,11 @@
 <?php
 
 /////message details/////////
-$stmt = $con->prepare("SELECT * FROM admin WHERE status = ?");
-          $stmt->bind_param("i", 1);
+$stmt = $con->prepare("SELECT * FROM admin WHERE status = '1'");
+          //$stmt->bind_param("i", '1');
           $stmt->execute();
-          $result = $stmt->get_result()()->fetch_all(MYSQLI_ASSOC);
-          if($result->num_rows < 1) {
+          $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+          if(empty($result)) {
             die("you don't have an active service, please contact eMiracle");
           }
           $stmt->close();
@@ -27,11 +27,10 @@ function getBalance($id, $key){
         global $con;
         ///get balance from data base////////////////
           $stmt = $con->prepare("SELECT * FROM user WHERE sid = ? and api_key = ?");
-          $stmt->bind_param("s", $id);
-          $stmt->bind_param("s", $key);
+          $stmt->bind_param("ss", $id, $key);
           $stmt->execute();
-          $result = $stmt->get_result()()->fetch_all(MYSQLI_ASSOC);
-          if($result->num_rows < 1) {
+          $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+          if(empty($result)) {
             die('you have no record with us, contact eMiracle');
           }
           $stmt->close();
