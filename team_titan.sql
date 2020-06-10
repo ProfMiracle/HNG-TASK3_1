@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 09, 2020 at 07:28 PM
+-- Generation Time: Jun 10, 2020 at 12:39 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.3.5
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `auth` varchar(50) NOT NULL,
   `sid` varchar(50) NOT NULL,
   `phone_number` varchar(14) NOT NULL,
-  `status` int(11) NOT NULL,
+  `status` int(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
 --
 
 INSERT INTO `admin` (`id`, `auth`, `sid`, `phone_number`, `status`) VALUES
-(1, '909e0cec1316ea243f56a44e540e2622', 'ACcd44f65db5f8ed31060c7f852b82c0db', '+12029338352', 1);
+(1, '35d8a589e4c40e65d5d81e654aab63a5', 'ACcd44f65db5f8ed31060c7f852b82c0db', '+12029338352', 1);
 
 -- --------------------------------------------------------
 
@@ -55,11 +55,19 @@ DROP TABLE IF EXISTS `history`;
 CREATE TABLE IF NOT EXISTS `history` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `name` int(11) NOT NULL,
-  `amount` int(11) NOT NULL,
+  `to_` varchar(50) NOT NULL,
+  `message` varchar(255) NOT NULL,
   `time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `history`
+--
+
+INSERT INTO `history` (`id`, `user_id`, `to_`, `message`, `time`) VALUES
+(1, 0, '2348153193630', 'TEXTING', '2020-06-10 00:45:38'),
+(2, 1, '+ 2348153193630', 'TEXTING', '2020-06-10 01:02:02');
 
 -- --------------------------------------------------------
 
@@ -82,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `sid`, `api_key`, `unit`) VALUES
-(1, 'miraclechibuzo@gmail.com', '01b307acba4f54f55aafc33bb06bbbf6ca803e9a', 'fb295e43abf0f8dfc3e4d4abc00d0a4fd34046c3', 1000);
+(1, 'xyz@gmail.com', '01b307acba4f54f55aafc33bb06bbbf6ca803e9a', 'fb295e43abf0f8dfc3e4d4abc00d0a4fd34046c3', 997);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
