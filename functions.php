@@ -37,7 +37,7 @@ function getBalance($id, $key){
           $email = $result[0]['email'];
           $balance = $result[0]['unit'];
 
-          $feed = array($email=>$balance);
+          $feed = array('email'=>$email, 'balance'=>$balance);
         ///////////
         header('Content-Type: application/json');
         echo json_encode($feed);
@@ -45,8 +45,9 @@ function getBalance($id, $key){
 
 function validate_phone($number)
 {
+  $numb='+'.$number;
      // Allow +, - and . in phone number
-     $filtered_phone = filter_var($number, FILTER_SANITIZE_NUMBER_INT);
+     $filtered_phone = filter_var($numb, FILTER_SANITIZE_NUMBER_INT);
      // Remove "-" from number
 
      $phone_to_check = str_replace("-", "", $filtered_phone);

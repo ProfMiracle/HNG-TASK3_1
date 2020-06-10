@@ -5,8 +5,8 @@ require_once 'Twilio/autoload.php';/////////load Twilio
 
 use Twilio\Rest\Client;
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $accesvia = "POST";
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+  $accesvia = "GET";
 }else{
   $accesvia = "";
 }
@@ -14,26 +14,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   switch($accesvia)
   {
-    case 'POST':
+    case 'GET':
 
-      /////Post email
-      if(!empty($_POST))/////////make sure post query holds value
+      /////GET email
+      if(!empty($_GET))/////////make sure GET query holds value
       {
        ///////////////////////filter data
-        $id = filter($_POST['id']);
-        $key = filter($_POST['key']);
-        $phone = $_POST['phone'];
-        $messagen = $_POST['message'];
+        $id = filter($_GET['id']);
+        $key = filter($_GET['key']);
+        $phone = '+'.$_GET['phone'];
+        $messagen = $_GET['message'];
        //////////////////////////////
 
         ////////////Check Unit Balance
-        ///get balance from data base////////////////
+        ///GET balance from data base////////////////
           $stmt = $con->prepare("SELECT * FROM user WHERE sid = ? and api_key = ?");
-          $stmt->bind_param("s", $id);
-          $stmt->bind_param("s", $key);
+          $stmt->bind_param("ss", $id, $key);
           $stmt->execute();
-          $result = $stmt->get_result()()->fetch_all(MYSQLI_ASSOC);
-          if($result->num_rows < 1) {
+          $result = $stmt->GET_result()->fetch_all(MYSQLI_ASSOC);
+          if(empty($result)) {
             $response=array(
                 'status' => 419,
                 'status_message' =>'You dont have an account with us.'
@@ -52,9 +51,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               );
           }else{
 
-      $newmessage = filter($messagen);////////get message from the string
+      $newmessage = filter($messagen);////////GET message from the string
       $to = validate_phone($phone);/////phone forward message to
-
+ 
       $twilio = new Client($sid, $auth);
 
       $message = $twilio->messages
@@ -65,21 +64,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                            ]
                   );
       }
-                  ////////////reponse coding
+                  ////////////response coding
       if(!empty($message->sid)){
 
         /////////update unit balance
-          $stmt = $con->prepare("UPDATE user SET unit = ? WHERE sid = ? and api_key = ?");
+          $stmt = $con->prepare("UPDATE user SET unit = unit-1 WHERE sid = ? and api_key = ?");
           $stmt->bind_param("ss", $id, $key);
           $stmt->execute();
-          $LastInsertID = $con->insert_id;
           $stmt->close();
           //////////////////
 
 
           /////////update history
-            $stmt = $con->prepare("INSERT INTO history (user_id, to, message) VALUES (?,?,?)");
-            $stmt->bind_param("sss", $LastInsertID, $phone, $newmessage);
+            $stmt = $con->prepare("INSERT INTO history (user_id, to_, message) VALUES (?,?,?)");
+            $stmt->bind_param("sss", $user_id, $phone, $newmessage);
             $stmt->execute();
             $stmt->close();
           //////////////////
